@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1200</width>
+    <height>700</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>乒乓球赛事管理系统</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="collegeTab">
+       <attribute name="title">
+        <string>院系管理</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="collegeLayout"/>
+      </widget>
+      <widget class="QWidget" name="teamTab">
+       <attribute name="title">
+        <string>球队管理</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="teamLayout"/>
+      </widget>
+      <widget class="QWidget" name="playerTab">
+       <attribute name="title">
+        <string>球员管理</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="playerLayout"/>
+      </widget>
+      <widget class="QWidget" name="tournamentTab">
+       <attribute name="title">
+        <string>赛事管理</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="tournamentLayout"/>
+      </widget>
+      <widget class="QWidget" name="matchTab">
+       <attribute name="title">
+        <string>比赛管理</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="matchLayout"/>
+      </widget>
+      <widget class="QWidget" name="gameTab">
+       <attribute name="title">
+        <string>盘次对决管理</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="gameLayout"/>
+      </widget>
+      <widget class="QWidget" name="playerInGameTab">
+       <attribute name="title">
+        <string>参赛球员管理</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="playerInGameLayout"/>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1200</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

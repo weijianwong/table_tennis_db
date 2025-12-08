@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CaptainPage</class>
+ <widget class="QMainWindow" name="CaptainPage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1200</width>
+    <height>700</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>队长管理系统</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QGroupBox" name="headerGroup">
+      <layout class="QVBoxLayout" name="headerLayout">
+       <item>
+        <widget class="QLabel" name="titleLabel">
+         <property name="font">
+          <font>
+           <pointsize>16</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>🏓 球队名称</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="infoLabel">
+         <property name="styleSheet">
+          <string>color: #666;</string>
+         </property>
+         <property name="text">
+          <string>所属院系: | 成立年份:</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="teamPlayersTab">
+       <attribute name="title">
+        <string>我的球队</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="playersTabLayout">
+        <item>
+         <layout class="QHBoxLayout" name="searchPlayersLayout">
+          <item>
+           <widget class="QLabel" name="searchPlayersLabel">
+            <property name="text">
+             <string>搜索球员:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="searchPlayerInput">
+            <property name="placeholderText">
+             <string>输入学号、姓名或年级...</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnSearchPlayer">
+            <property name="text">
+             <string>🔍 搜索</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnClearPlayerSearch">
+            <property name="text">
+             <string>❌ 清除</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="searchPlayersSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="playerButtonsLayout">
+          <item>
+           <widget class="QPushButton" name="btnAddPlayer">
+            <property name="text">
+             <string>➕ 添加球员</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnRemovePlayer">
+            <property name="text">
+             <string>➖ 移除球员</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnRefreshPlayers">
+            <property name="text">
+             <string>🔄 刷新</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="playerButtonsSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="playersTable">
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectRows</enum>
+          </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <column>
+           <property name="text">
+            <string>学号</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>姓名</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>性别</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>年级</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>电话</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>角色</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="playerStatsTab">
+       <attribute name="title">
+        <string>球员统计</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="statsTabLayout">
+        <item>
+         <layout class="QHBoxLayout" name="statsButtonsLayout">
+          <item>
+           <widget class="QPushButton" name="btnRefreshStats">
+            <property name="text">
+             <string>🔄 刷新统计</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="statsSortCombo">
+            <property name="minimumWidth">
+             <number>150</number>
+            </property>
+            <item>
+             <property name="text">
+              <string>按胜率排序</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>按比赛数排序</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>按姓名排序</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <spacer name="statsButtonsSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QScrollArea" name="statsScrollArea">
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <widget class="QWidget" name="statsScrollContent">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>1150</width>
+             <height>550</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="statsContentLayout">
+            <item>
+             <layout class="QVBoxLayout" name="statsCardsLayout"/>
+            </item>
+            <item>
+             <spacer name="statsVerticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tournamentsTab">
+       <attribute name="title">
+        <string>参赛赛事</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="tournamentsTabLayout">
+        <item>
+         <layout class="QHBoxLayout" name="searchTournamentsLayout">
+          <item>
+           <widget class="QLabel" name="searchTournamentLabel">
+            <property name="text">
+             <string>搜索赛事:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="searchTournamentInput">
+            <property name="placeholderText">
+             <string>输入赛事名称或年份...</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnSearchTournament">
+            <property name="text">
+             <string>🔍 搜索</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnClearTournamentSearch">
+            <property name="text">
+             <string>❌ 清除</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="searchTournamentsSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="tournamentsTable">
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectRows</enum>
+          </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <column>
+           <property name="text">
+            <string>赛事ID</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>赛事名称</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>年份</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>状态</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="matchesTab">
+       <attribute name="title">
+        <string>比赛记录</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="matchesTabLayout">
+        <item>
+         <layout class="QHBoxLayout" name="searchMatchesLayout">
+          <item>
+           <widget class="QLabel" name="searchMatchesLabel">
+            <property name="text">
+             <string>搜索比赛:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="searchMatchInput">
+            <property name="placeholderText">
+             <string>输入对手名称或场地...</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnSearchMatch">
+            <property name="text">
+             <string>🔍 搜索</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnClearMatchSearch">
+            <property name="text">
+             <string>❌ 清除</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="searchMatchesSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="matchButtonsLayout">
+          <item>
+           <widget class="QPushButton" name="btnRefreshMatches">
+            <property name="text">
+             <string>🔄 刷新比赛记录</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="matchButtonsSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="matchesTable">
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectRows</enum>
+          </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <column>
+           <property name="text">
+            <string>比赛ID</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>比赛时间</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>场地</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>赛事</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>对手</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>总比分</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>裁判</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
