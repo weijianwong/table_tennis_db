@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import (
     QMainWindow, QDialog, QTableWidgetItem, QMessageBox,
     QHeaderView, QWidget, QVBoxLayout, QHBoxLayout, QLabel,
-    QProgressBar, QFrame
+    QProgressBar, QFrame, QPushButton
 )
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QFont
@@ -64,11 +64,12 @@ class PlayerStatCard(QFrame):
 class CaptainPage(QMainWindow):
     """Team Captain Dashboard"""
 
-    def __init__(self, db_conn, student_id):
+    def __init__(self, db_conn, student_id, on_logout_callback=None):
         super().__init__()
         self.db_conn = db_conn
         self.student_id = student_id
         self.team_info = self.get_team_info()
+        self.on_logout_callback = on_logout_callback
 
         if not self.team_info:
             QMessageBox.critical(self, "错误", "未找到您的球队信息！")
@@ -82,6 +83,29 @@ class CaptainPage(QMainWindow):
         self.init_ui()
         self.connect_signals()
         self.load_all_data()
+        self.setup_logout_button()
+
+    def setup_logout_button(self):
+        """设置退出登录按钮"""
+        # ADD this entire method
+        logout_btn = self.findChild(QPushButton, 'btnLogout')
+        if logout_btn:
+            logout_btn.clicked.connect(self.handle_logout)
+
+    def handle_logout(self):
+        """处理退出登录"""
+        # ADD this entire method
+        reply = QMessageBox.question(
+            self,
+            "确认退出",
+            "确定要退出登录吗？",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+        )
+
+        if reply == QMessageBox.StandardButton.Yes:
+            self.close()
+            if self.on_logout_callback:
+                self.on_logout_callback()
 
     def get_team_info(self):
         """Get team information for the logged-in captain"""

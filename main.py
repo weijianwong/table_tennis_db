@@ -10,8 +10,8 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import Qt, QDateTime
 from PyQt6 import uic
 
-from tt_db.captain import CaptainPage
-from tt_db.login import LoginPage
+from captain import CaptainPage
+from login import LoginPage
 
 
 class DatabaseConnection:
@@ -1267,9 +1267,10 @@ class PlayerInGameManager(TableManager):
 class MainWindow(QMainWindow):
     """主窗口 - 使用UI文件"""
 
-    def __init__(self):
+    def __init__(self, on_logout_callback=None):
         super().__init__()
         self.db_conn = DatabaseConnection()
+        self.on_logout_callback = on_logout_callback
 
         # 连接数据库
         if not self.connect_database():
@@ -1278,7 +1279,30 @@ class MainWindow(QMainWindow):
 
         # 加载UI文件
         self.load_ui()
-        self.setup_tabs()  # 取消注释这行
+        self.setup_tabs()
+        self.setup_logout_button()
+
+    def setup_logout_button(self):
+        """设置退出登录按钮"""
+        # ADD this entire method
+        logout_btn = self.findChild(QPushButton, 'btnLogout')
+        if logout_btn:
+            logout_btn.clicked.connect(self.handle_logout)
+
+    def handle_logout(self):
+        """处理退出登录"""
+        # ADD this entire method
+        reply = QMessageBox.question(
+            self,
+            "确认退出",
+            "确定要退出登录吗？",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+        )
+
+        if reply == QMessageBox.StandardButton.Yes:
+            self.close()
+            if self.on_logout_callback:
+                self.on_logout_callback()
 
     def connect_database(self):
         """连接数据库"""
@@ -1322,12 +1346,7 @@ class MainWindow(QMainWindow):
 def main():
     app = QApplication(sys.argv)
 
-    # # Create and show main window directly
-    # window = MainWindow()
-    # window.show()
-    #
-    # sys.exit(app.exec())
-    # Create main windows
+    # Create database connection
     db_conn = DatabaseConnection()
     if not db_conn.connect(
             host='localhost',
@@ -1337,24 +1356,45 @@ def main():
     ):
         QMessageBox.critical(None, "错误", "无法连接到数据库！请检查配置。")
         sys.exit(1)
-    admin_window = MainWindow()
+
+    # MODIFY: Initialize windows as None
+    admin_window = None
     captain_window = None
+    login_window = None
+
+    def show_login_window():
+        """显示登录窗口"""
+        # ADD this entire function
+        nonlocal login_window
+        login_window = LoginPage(
+            db_conn=db_conn,
+            on_admin_login=show_admin_window,
+            on_captain_login=show_captain_window
+        )
+        login_window.show()
 
     def show_admin_window():
+        # MODIFY: Add logout callback and close login window
+        nonlocal admin_window, login_window
+        if login_window:
+            login_window.close()
+        admin_window = MainWindow(on_logout_callback=show_login_window)
         admin_window.show()
 
     def show_captain_window(student_id):
-        nonlocal captain_window
-        captain_window = CaptainPage(db_conn, student_id)
+        # MODIFY: Add logout callback and close login window
+        nonlocal captain_window, login_window
+        if login_window:
+            login_window.close()
+        captain_window = CaptainPage(
+            db_conn,
+            student_id,
+            on_logout_callback=show_login_window
+        )
         captain_window.show()
 
-    # Create and show login window
-    login_window = LoginPage(
-        db_conn=db_conn,
-        on_admin_login=show_admin_window,
-        on_captain_login=show_captain_window
-    )
-    login_window.show()
+    # MODIFY: Use the new function instead of direct instantiation
+    show_login_window()
 
     sys.exit(app.exec())
 
